@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppGLucosa - Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
+    <link rel="stylesheet" href="../styles/general.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-section">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+            </div>
+            <h2>AppGLucosa</h2>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item active"><i class="fas fa-home"></i> Dashboard</li>
+            <li class="nav-item"><i class="fas fa-chart-line"></i> Estadísticas</li>
+            <li class="nav-item"><i class="fas fa-utensils"></i> Nutrición</li>
+            <li class="nav-item"><i class="fas fa-file-pdf"></i> Reportes</li>
+            <li class="nav-item"><i class="fas fa-cog"></i> Configuración</li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="header-title">
+                <h1>Bienvenido, [Usuario]</h1>
+                <p>Resumen de tu salud glucémica</p>
+            </div>
+            <div class="header-actions">
+                <button class="notification-btn"><i class="fas fa-bell"></i></button>
+                <div class="user-profile">
+                    <div class="user-avatar">JP</div>
+                    <span>Jorge Pedrajas</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card health-status">
+                <div class="status-icon">
+                    <i class="fas fa-smile-beam"></i>
+                </div>
+                <div>
+                    <h3>Estado Actual</h3>
+                    <p>Niveles dentro del rango objetivo</p>
+                    <p>Última medición: 95 mg/dL</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Promedio Glucosa</h3>
+                    <i class="card-icon fas fa-tint"></i>
+                </div>
+                <h2>98 mg/dL</h2>
+                <p>Últimos 7 días</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">HbA1c Estimado</h3>
+                    <i class="card-icon fas fa-vial"></i>
+                </div>
+                <h2>5.2%</h2>
+                <p>Equivalente promedio</p>
+            </div>
+
+            <div class="card glucose-chart">
+                <div class="card-header">
+                    <h3 class="card-title">Tendencias Glucémicas</h3>
+                    <div class="time-filter">
+                        <select>
+                            <option>7 días</option>
+                            <option>15 días</option>
+                            <option>30 días</option>
+                        </select>
+                    </div>
+                </div>
+                <canvas id="glucoseChart"></canvas>
+            </div>
+
+            <div class="card measurements-table">
+                <div class="card-header">
+                    <h3 class="card-title">Registros Recientes</h3>
+                    <i class="card-icon fas fa-history"></i>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Glucosa</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2023-11-15</td>
+                            <td>08:00</td>
+                            <td>96 mg/dL</td>
+                            <td><span style="color: #4CAF50;">Normal</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Acciones Rápidas</h3>
+                    <i class="card-icon fas fa-bolt"></i>
+                </div>
+                <div class="quick-actions">
+                    <button class="action-btn">
+                        <i class="fas fa-plus"></i> Nueva Medición
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-utensils"></i> Registrar Comida
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-file-pdf"></i> Generar Reporte
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-bell"></i> Configurar Alertas
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('glucoseChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+                datasets: [{
+                    label: 'Niveles de Glucosa (mg/dL)',
+                    data: [95, 102, 98, 110, 92, 105, 99],
+                    borderColor: '#1e3c72',
+                    tension: 0.4,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

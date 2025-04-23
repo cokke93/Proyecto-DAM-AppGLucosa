@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppGLucosa - Reportes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles/general.css">
+    <link rel="stylesheet" href="../styles/reportes.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-section">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+            </div>
+            <h2>AppGLucosa</h2>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item"><i class="fas fa-home"></i> Dashboard</li>
+            <li class="nav-item"><i class="fas fa-chart-line"></i> Estadísticas</li>
+            <li class="nav-item"><i class="fas fa-utensils"></i> Nutrición</li>
+            <li class="nav-item active"><i class="fas fa-file-pdf"></i> Reportes</li>
+            <li class="nav-item"><i class="fas fa-cog"></i> Configuración</li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="header-title">
+                <h1>Generador de Reportes</h1>
+                <p>Crea informes personalizados para compartir con tu médico</p>
+            </div>
+        </div>
+
+        <div class="report-date-picker">
+            <input type="date" class="date-input" id="startDate">
+            <input type="date" class="date-input" id="endDate">
+            <button class="btn"><i class="fas fa-filter"></i> Filtrar</button>
+        </div>
+
+        <div class="report-grid">
+            <div class="report-card">
+                <div class="report-header">
+                    <div class="report-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Reporte Periódico</h3>
+                </div>
+                <p>Genera un informe detallado con tus mediciones en el periodo seleccionado</p>
+                <button class="btn" style="margin-top: 15px;">
+                    <i class="fas fa-file-alt"></i> Generar
+                </button>
+            </div>
+
+            <div class="report-card">
+                <div class="report-header">
+                    <div class="report-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <h3>Reporte Completo</h3>
+                </div>
+                <p>Informe completo con todas tus métricas: glucosa, nutrición y actividad</p>
+                <button class="btn" style="margin-top: 15px;">
+                    <i class="fas fa-file-medical"></i> Generar
+                </button>
+            </div>
+
+            <div class="report-card">
+                <div class="report-header">
+                    <div class="report-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Comparativa</h3>
+                </div>
+                <p>Compara periodos diferentes para analizar tu evolución</p>
+                <button class="btn" style="margin-top: 15px;">
+                    <i class="fas fa-chart-bar"></i> Generar
+                </button>
+            </div>
+        </div>
+
+        <div class="report-preview">
+            <div class="pdf-preview">
+                <div class="preview-header">
+                    <h2>Reporte de Glucosa</h2>
+                    <p>Periodo:</p>
+                </div>
+                <h3>Datos Principales</h3>
+                <table style="width: 100%; margin: 15px 0;">
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Glucosa (mg/dL)</th>
+                        <th>Estado</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><span style="color: #4CAF50;"></span></td>
+                    </tr>
+                </table>
+
+                <div style="margin-top: 30px;">
+                    <button class="btn"><i class="fas fa-download"></i> Exportar a PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    </script>
+</body>
+</html>

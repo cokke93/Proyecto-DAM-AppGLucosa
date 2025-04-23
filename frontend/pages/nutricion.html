@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppGLucosa - Nutrición</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles/general.css">
+    <link rel="stylesheet" href="../styles/nutricion.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-section">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+            </div>
+            <h2>AppGLucosa</h2>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item"><i class="fas fa-home"></i> Dashboard</li>
+            <li class="nav-item"><i class="fas fa-chart-line"></i> Estadísticas</li>
+            <li class="nav-item active"><i class="fas fa-utensils"></i> Nutrición</li>
+            <li class="nav-item"><i class="fas fa-file-pdf"></i> Reportes</li>
+            <li class="nav-item"><i class="fas fa-cog"></i> Configuración</li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="header-title">
+                <h1>Base de Datos Nutricionales</h1>
+                <p>Índice glucémico de los alimentos</p>
+            </div>
+        </div>
+
+        <div class="nutrition-grid">
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Buscar alimento...">
+                <button class="filter-btn active"><i class="fas fa-search"></i></button>
+            </div>
+
+            <div class="filter-buttons">
+                <button class="filter-btn active">Todos</button>
+                <button class="filter-btn">Bajo (≤55)</button>
+                <button class="filter-btn">Medio (56-69)</button>
+                <button class="filter-btn">Alto (≥70)</button>
+            </div>
+
+            <div class="food-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Alimento</th>
+                            <th>Índice Glucémico</th>
+                            <th>Categoría</th>
+                            <th>Porción (g)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Manzana</td>
+                            <td><span class="gi-indicator gi-low">36</span></td>
+                            <td>Fruta</td>
+                            <td>120</td>
+                        </tr>
+                        <tr>
+                            <td>Arroz Integral</td>
+                            <td><span class="gi-indicator gi-medium">68</span></td>
+                            <td>Cereal</td>
+                            <td>150</td>
+                        </tr>
+                        <tr>
+                            <td>Pan Blanco</td>
+                            <td><span class="gi-indicator gi-high">75</span></td>
+                            <td>Panadería</td>
+                            <td>60</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="gi-indicator gi-low"></span>
+                    <span>Bajo - Absor
