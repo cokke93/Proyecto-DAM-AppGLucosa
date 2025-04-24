@@ -12,6 +12,11 @@ body {
     min-height: 100vh;
 }
 
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
 .sidebar {
     width: 250px;
     background: #1e3c72;
@@ -63,7 +68,7 @@ body {
 }
 
 .nav-item.active {
-    background: #2a5298;
+    background: black;
     font-weight: 600;
 }
 
