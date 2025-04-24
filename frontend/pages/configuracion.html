@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppGLucosa - Configuración</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles/general.css">
+    <link rel="stylesheet" href="../styles/configuracion.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-section">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+            </div>
+            <h2>AppGLucosa</h2>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><i class="fas fa-home"></i><a href="./dashboard.html">Dashboard</a></li>
+            <li class="nav-item"><i class="fas fa-chart-line"></i><a href="./estadisticas.html"> Estadísticas</a></li>
+            <li class="nav-item"><i class="fas fa-utensils"></i><a href="./nutricion.html"> Nutrición</a></li>
+            <li class="nav-item"><i class="fas fa-file-pdf"></i><a href="./reportes.html"> Reportes</a></li>
+            <li class="nav-item active"><i class="fas fa-cog"></i><a href="./configuracion.html"> Configuración</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="header-title">
+                <h1>Configuración</h1>
+                <p>Personaliza la apariencia de la aplicación</p>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card appearance-card">
+                <div class="card-header">
+                    <h3 class="card-title">Modo Oscuro</h3>
+                </div>
+                <div class="theme-switch-container">
+                    <label class="theme-switch">
+                        <input type="checkbox" id="themeToggle">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
