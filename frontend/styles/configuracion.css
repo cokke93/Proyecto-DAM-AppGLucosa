@@ -42,19 +42,3 @@ input:checked + .slider {
     font-weight: 500;
     color: #666;
 }
-
-[data-theme="dark"] .theme-status {
-    color: #aaa;
-}
-
-[data-theme="dark"] .theme-description {
-    color: #ccc;
-}
-
-[data-theme="dark"] .slider {
-    background-color: #555;
-}
-
-[data-theme="dark"] input:checked + .slider {
-    background-color: #3a6bc7;
-}
