@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express  = require('express');
 const mongoose = require('mongoose');
+const User = require('./models/User');
 
 const app = express();
 app.use(express.json());
@@ -16,6 +17,20 @@ mongoose.connect(process.env.MONGODB_URI, {
 //Routes
 app.get('/ping', (req, res) => {
   res.send('pong');
+});
+
+app.post('/test-user', async (req, res) => {
+  try {
+    const newUser = new User({
+      email: 'test@example.com',
+      password: 'plainPassword',
+      name: 'Usuario Test'
+    });
+    await newUser.save();
+    res.json({ ok: true, user: newUser });
+  } catch (err) {
+    res.status(400).json({ ok: false, error: err.message });
+  }
 });
 
 const port = process.env.PORT || 3000;
