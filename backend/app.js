@@ -3,6 +3,7 @@ const express  = require('express');
 const mongoose = require('mongoose');
 const User = require('./models/User');
 const authRoutes = require('./routes/auth');
+const measurementRoutes = require('./routes/measurements');
 
 const app = express();
 app.use(express.json());
@@ -20,8 +21,13 @@ app.get('/ping', (req, res) => {
   res.send('pong');
 });
 
+//Users
+
 //Auth 
 app.use('/api/auth', authRoutes);
+
+//Measurements
+app.use('/api/measurements', measurementRoutes);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
