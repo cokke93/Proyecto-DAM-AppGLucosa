@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const User = require('./models/User');
 const authRoutes = require('./routes/auth');
 const measurementRoutes = require('./routes/measurements');
+const foodRoutes = require('./routes/food');
 
 const app = express();
 app.use(express.json());
@@ -28,6 +29,9 @@ app.use('/api/auth', authRoutes);
 
 //Measurements
 app.use('/api/measurements', measurementRoutes);
+
+//Food
+app.use('/api/food', foodRoutes);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

@@ -2,7 +2,7 @@ const express     = require('express');
 const Measurement = require('../models/Measurement');
 const router      = express.Router();
 
-// New measurement
+//New measurement
 //    POST /api/measurements
 router.post('/', async (req, res) => {
   const { user, type, value, timestamp } = req.body;
@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// 2) Read measurements
+//Read measurements
 //    GET /api/measurements?user=ID&type=glucosa&range=7d
 router.get('/', async (req, res) => {
   const { user, type, range = '7d' } = req.query;
@@ -42,7 +42,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// 3) Measurement by ID
+//Measurement by ID
 //    GET /api/measurements/:id
 router.get('/:id', async (req, res) => {
   try {
@@ -54,7 +54,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// 4) Update measurement
+//Update measurement
 //    PUT /api/measurements/:id
 router.put('/:id', async (req, res) => {
   try {
@@ -70,7 +70,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// 5) Delete measurement
+//Delete measurement
 //    DELETE /api/measurements/:id
 router.delete('/:id', async (req, res) => {
   try {
