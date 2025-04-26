@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../styles/general.css">
     <link rel="stylesheet" href="../styles/nutricion.css">
+    <script src="../scripts/nutritcion.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <div class="sidebar">
@@ -16,13 +18,12 @@
             </div>
             <h2>AppGLucosa</h2>
         </div>
-
         <ul class="nav-menu">
             <li class="nav-item "><i class="fas fa-home"></i><a href="./dashboard.html">Dashboard</a></li>
             <li class="nav-item"><i class="fas fa-chart-line"></i><a href="./estadisticas.html"> Estadísticas</a></li>
             <li class="nav-item active" ><i class="fas fa-utensils"></i><a href="./nutricion.html"> Nutrición</a></li>
             <li class="nav-item"><i class="fas fa-file-pdf"></i><a href="./reportes.html"> Reportes</a></li>
-            <li class="nav-item"><i class="fas fa-cog"></i><a href="./configuracion.html"> Configuración</a></l
+            <li class="nav-item"><i class="fas fa-cog"></i><a href="./configuracion.html"> Configuración</a></li>
         </ul>
     </div>
 
@@ -31,20 +32,24 @@
             <div class="header-title">
                 <h1>Base de Datos Nutricionales</h1>
                 <p>Índice glucémico de los alimentos</p>
+                <br>
+            </div>
+            <div class="header-actions">
+                <button id="addFoodBtn" class="filter-btn active"><i class="fas fa-plus"></i> Añadir Alimento</button>
             </div>
         </div>
 
         <div class="nutrition-grid">
             <div class="search-bar">
-                <input type="text" class="search-input" placeholder="Buscar alimento...">
-                <button class="filter-btn active"><i class="fas fa-search"></i></button>
+                <input id="searchInput" type="text" class="search-input" placeholder="Buscar alimento...">
+                <button id="searchBtn" class="filter-btn active"><i class="fas fa-search"></i></button>
             </div>
 
-            <div class="filter-buttons">
-                <button class="filter-btn active">Todos</button>
-                <button class="filter-btn">Bajo (≤55)</button>
-                <button class="filter-btn">Medio (56-69)</button>
-                <button class="filter-btn">Alto (≥70)</button>
+            <div class="filter-buttons" id="filterButtons">
+                <button data-gi="all" class="filter-btn active">Todos</button>
+                <button data-gi="low" class="filter-btn" style="background-color: green;">Bajo (≤55)</button>
+                <button data-gi="medium" class="filter-btn" style="background-color: yellow;">Medio (56-69)</button>
+                <button data-gi="high" class="filter-btn" style="background-color: red;">Alto (≥70)</button>
             </div>
 
             <div class="food-table">
@@ -55,32 +60,50 @@
                             <th>Índice Glucémico</th>
                             <th>Categoría</th>
                             <th>Porción (g)</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Manzana</td>
-                            <td><span class="gi-indicator gi-low">36</span></td>
-                            <td>Fruta</td>
-                            <td>120</td>
-                        </tr>
-                        <tr>
-                            <td>Arroz Integral</td>
-                            <td><span class="gi-indicator gi-medium">68</span></td>
-                            <td>Cereal</td>
-                            <td>150</td>
-                        </tr>
-                        <tr>
-                            <td>Pan Blanco</td>
-                            <td><span class="gi-indicator gi-high">75</span></td>
-                            <td>Panadería</td>
-                            <td>60</td>
-                        </tr>
+                    <tbody id="foodTableBody">
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
 
-            <div class="legend">
-                <div class="legend-item">
-                    <span class="gi-indicator gi-low"></span>
-                    <span>Bajo - Absor
+    <div id="foodEm" class="v-emerg">
+      <div class="v-emerg-content">
+        <h3 id="emTitle">Añadir Alimento</h3>
+        <div class="form-group">
+          <label for="foodName">Nombre</label>
+          <input id="foodName" type="text">
+        </div>
+        <div class="form-group">
+          <label for="foodGi">Índice Glucémico</label>
+          <input id="foodGi" type="number" min="0">
+        </div>
+        <div class="form-group">
+          <label for="foodCategory">Categoría</label>
+          <select id="foodCategory">
+            <option>Fruta</option>
+            <option>Cereal</option>
+            <option>Panadería</option>
+            <option>Lácteos</option>
+            <option>Vegetal</option>
+            <option>Legumbre</option>
+            <option>Tubérculo</option>
+            <option>Bebida</option>
+            <option>Endulzante</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="foodPortion">Porción (g)</label>
+          <input id="foodPortion" type="number" min="1">
+        </div>
+        <div class="v-emerg-actions">
+          <button id="cancelBtn" class="filter-btn">Cancelar</button>
+          <button id="saveBtn" class="filter-btn active">Guardar</button>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
