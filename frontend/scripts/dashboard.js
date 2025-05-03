@@ -1,74 +1,138 @@
-var api = 'http://localhost:3000/api/measurements';
-var token = localStorage.getItem('token') || '';
+// scripts/dashboard.js
+
+const API_BASE = 'http://localhost:3000/api/measurements';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const token = localStorage.getItem('token') || '';
+  const userId = localStorage.getItem('userId') || '';
+  const userName = localStorage.getItem('userName') || 'Usuario';
+
+  document.getElementById('loggedUserName').textContent = userName;
+
+  const rangeSelect = document.getElementById('rangeSelect');
+  const newBtn = document.getElementById('newMeasurementBtn');
+  const cancelBtn = document.getElementById('cancelMeasurementBtn');
+  const saveBtn = document.getElementById('saveMeasurementBtn');
+  const deleteAllBtn = document.getElementById('deleteAllBtn');
+  const refreshBtn = document.getElementById('refreshBtn');
+  const registerFoodBtn = document.getElementById('registerFoodBtn');
+  const modal = document.getElementById('measurementModal');
+
+  // Listeners
+  rangeSelect.addEventListener('change', () => loadMeasurements(rangeSelect.value, token));
+  newBtn.addEventListener('click', showModal);
+  cancelBtn.addEventListener('click', hideModal);
+  window.addEventListener('click', e => { if (e.target === modal) hideModal(); });
+  saveBtn.addEventListener('click', () => saveMeasurement(userId, token));
+  deleteAllBtn.addEventListener('click', () => deleteAllMeasurements(userId, token));
+  refreshBtn.addEventListener('click', () => loadMeasurements(rangeSelect.value, token));
+  registerFoodBtn.addEventListener('click', () => window.location.href = './nutricion.html');
+  loadMeasurements(rangeSelect.value, token);
+});
 
 
-function loadMeasurements() {
-  var range = document.getElementById('rangeSelect').value;
-  axios.get(api + '?range=' + range, { headers:{ Authorization:'Bearer ' + token } })
-  .then(function(res) {
-    var data = res.data.measurements;
+// Load measurements on page load
+async function loadMeasurements(range, token) {
+  try {
+    const url = `${API_BASE}?range=${range}`;
+    const res = await axios.get(url, { headers: { Authorization: `Bearer ${token}` } });
+    const data = res.data.measurements;
 
-//Table
-    var tb = document.getElementById('measurementsBody');
-    tb.innerHTML = '';
-    for (var i=0;i<data.length;i++){
-      var d = new Date(data[i].timestamp);
-      tb.innerHTML += '<tr>' +
-        '<td>'+d.toLocaleDateString()+'</td>' +
-        '<td>'+d.toLocaleTimeString()+'</td>' +
-        '<td>'+data[i].value+'</td>' +
-        '<td><button onclick="deleteMeasurement(\''+data[i]._id+'\')">Borrar</button></td>' +
-      '</tr>';
-    }
-
-//Chart
-    var labels = data.map(function(m){ return new Date(m.timestamp).toLocaleDateString(); });
-    var vals   = data.map(function(m){ return m.value; });
-    if(window.myChart) window.myChart.destroy();
-    window.myChart = new Chart(document.getElementById('glucoseChart').getContext('2d'),{
-      type:'line', data:{ labels:labels, datasets:[{ label:'Glucosa', data:vals }] }
-    });
-  }).catch(function(e){ console.log(e); alert('Error cargando'); });
-}
-
-//Measurement Emergent
-document.getElementById('newMeasurementBtn').onclick = function(){
-  document.getElementById('measurementEm').style.display = 'block';
-  document.getElementById('inputValue').value='';
-  document.getElementById('inputTimestamp').value = new Date().toISOString().slice(0,16);
-};
-document.getElementById('cancelMeasurementBtn').onclick = function(){
-  document.getElementById('measurementEm').style.display = 'none';
-};
-window.onclick = function(e){ 
-  if(e.target == document.getElementById('measurementEm')) 
-    document.getElementById('measurementEm').style.display='none'; 
-};
-
-//Save Measurement
-document.getElementById('saveMeasurementBtn').onclick = function(){
-  var v = document.getElementById('inputValue').value;
-  var ts= document.getElementById('inputTimestamp').value;
-  axios.post(api, 
-    { user:localStorage.getItem('userId'), type:'glucosa', value:parseFloat(v), timestamp: new Date(ts) },
-    { headers:{ Authorization:'Bearer ' + token } }
-  )
-  .then(function(){
-    loadMeasurements(); 
-    document.getElementById('measurementEm').style.display='none'; 
-    alert('Guardado'); 
-  })
-  .catch(function(e){ console.log(e); alert('Error guardar'); });
-};
-
-//Delete Measurement
-function deleteMeasurement(id){
-  if(confirm('¿Seguro?')){
-    axios.delete(api + '/' + id, { headers:{ Authorization:'Bearer ' + token } })
-    .then(function(){ loadMeasurements(); alert('Borrado'); });
+    renderTable(data);
+    renderChart(data);
+  } catch (err) {
+    console.error(err);
+    alert('Error cargando mediciones');
   }
 }
 
-document.getElementById('rangeSelect').onchange = loadMeasurements;
+// Render table and chart
+function renderTable(data) {
+  const tb = document.getElementById('measurementsBody');
+  tb.innerHTML = '';
+  data.forEach(m => {
+    const d = new Date(m.timestamp);
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${d.toLocaleDateString()}</td>
+      <td>${d.toLocaleTimeString()}</td>
+      <td>${m.value}</td>
+      <td><button onclick="deleteMeasurement('${m._id}')">Borrar</button></td>
+    `;
+    tb.appendChild(row);
+  });
+}
 
-loadMeasurements();
+// Render chart using Chart.js
+function renderChart(data) {
+  const ordered = data.slice()
+  const labels = ordered.map(m => new Date(m.timestamp).toLocaleDateString());
+  const vals = ordered.map(m => m.value);
+
+  if (window.myChart) window.myChart.destroy();
+  window.myChart = new Chart(
+    document.getElementById('glucoseChart').getContext('2d'),
+    { type: 'line', data: { labels, datasets: [{ label: 'Glucosa', data: vals }] } }
+  );
+}
+
+// Modal functions
+function showModal() {
+  document.getElementById('inputValue').value = '';
+  document.getElementById('inputTimestamp').value = new Date().toISOString().slice(0, 16);
+  document.getElementById('measurementModal').style.display = 'block';
+}
+
+// Hide modal
+function hideModal() {
+  document.getElementById('measurementModal').style.display = 'none';
+}
+
+// Save measurement
+async function saveMeasurement(userId, token) {
+  const v = parseFloat(document.getElementById('inputValue').value);
+  const ts = new Date(document.getElementById('inputTimestamp').value);
+  try {
+    await axios.post(
+      API_BASE,
+      { user: userId, type: 'glucosa', value: v, timestamp: ts },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    hideModal();
+    loadMeasurements(document.getElementById('rangeSelect').value, token);
+    alert('Medición guardada');
+  } catch (err) {
+    console.error(err);
+    alert('Error guardando medición');
+  }
+}
+
+// Delete measurement by ID
+async function deleteMeasurement(id) {
+  if (!confirm('¿Seguro que quieres borrar esta medición?')) return;
+  const token = localStorage.getItem('token');
+  try {
+    await axios.delete(`${API_BASE}/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+    loadMeasurements(document.getElementById('rangeSelect').value, token);
+    alert('Medición borrada');
+  } catch (err) {
+    console.error(err);
+    alert('Error borrando medición');
+  }
+}
+
+// Delete all measurements
+async function deleteAllMeasurements(userId, token) {
+  if (!userId) return alert('No hay usuario logueado');
+  if (!confirm('¿Seguro que quieres borrar TODAS tus mediciones?')) return;
+  try {
+    const res = await axios.delete(`${API_BASE}?user=${userId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    alert(`Se han borrado ${res.data.deletedCount} mediciones`);
+    loadMeasurements(document.getElementById('rangeSelect').value, token);
+  } catch (err) {
+    console.error(err);
+    alert('Error al borrar todas las mediciones');
+  }
+}

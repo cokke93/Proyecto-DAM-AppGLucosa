@@ -6,13 +6,12 @@ function createWindow() {
     width: 1920,
     height: 1080,
     webPreferences: {
-      preload: path.join(__dirname, 'renderer.js'),
       nodeIntegration: true,
       contextIsolation: false
     }
   });
 
-  win.loadFile('./pages/dashboard.html');
+  win.loadFile('./pages/login.html');
   win.webContents.openDevTools();
 }
 

@@ -1,78 +1,112 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AppGLucosa - Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="../styles/dashboard.css">
-    <link rel="stylesheet" href="../styles/general.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AppGLucosa - Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../styles/dashboard.css">
+  <link rel="stylesheet" href="../styles/general.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
+
 <body>
-    <div class="sidebar">
-        <div class="logo-section">
-            <div class="logo">
-                <i class="fas fa-heartbeat"></i>
-            </div>
-            <h2>AppGLucosa</h2>
-        </div>
-        <ul class="nav-menu">
-            <li class="nav-item active"><i class="fas fa-home"></i><a href="./dashboard.html">Dashboard</a></li>
-            <li class="nav-item " ><i class="fas fa-chart-line"></i><a href="./estadisticas.html"> Estadísticas</a></li>
-            <li class="nav-item"><i class="fas fa-utensils"></i><a href="./nutricion.html"> Nutrición</a></li>
-            <li class="nav-item"><i class="fas fa-file-pdf"></i><a href="./reportes.html"> Reportes</a></li>
-            <li class="nav-item"><i class="fas fa-cog"></i><a href="./configuracion.html"> Configuración</a></l
-        </ul>
-    </div>
-    </div>
-    <div class="main-content">
-      <div class="header">
-        <h1>Bienvenido, Usuario</h1>
-        <p>Resumen de tu salud glucémica</p>
+  <div class="sidebar">
+    <div class="logo-section">
+      <div class="logo">
+        <i class="fas fa-heartbeat"></i>
       </div>
-      <div class="dashboard-grid">
-        <div class="card glucose-chart">
-          <div class="card-header">
-            <h3>Tendencias Glucosa</h3>
-            <select id="rangeSelect">
-              <option value="7d">7 días</option>
-              <option value="15d">15 días</option>
-              <option value="30d">30 días</option>
-            </select>
-          </div>
-          <canvas id="glucoseChart"></canvas>
-        </div>
-        <div class="card measurements-table">
-          <div class="card-header">
-            <h3>Registros Recientes</h3>
-          </div>
-          <table>
-            <thead><tr><th>Fecha</th><th>Hora</th><th>Valor</th><th>Acción</th></tr></thead>
-            <tbody id="measurementsBody"></tbody>
-          </table>
-        </div>
-        <div class="card">
-          <div class="card-header"><h3>Acciones Rápidas</h3></div>
-          <button id="newMeasurementBtn" class="action-btn"><i class="fas fa-plus"></i> Nueva Medición</button>
-        </div>
+      <h2>AppGLucosa</h2>
+    </div>
+    <ul class="nav-menu">
+      <li class="nav-item active"><i class="fas fa-home"></i><a href="./dashboard.html">Dashboard</a></li>
+      <li class="nav-item "><i class="fas fa-chart-line"></i><a href="./estadisticas.html"> Estadísticas</a></li>
+      <li class="nav-item"><i class="fas fa-utensils"></i><a href="./nutricion.html"> Nutrición</a></li>
+      <li class="nav-item"><i class="fas fa-file-pdf"></i><a href="./reportes.html"> Reportes</a></li>
+      <li class="nav-item"><i class="fas fa-cog"></i><a href="./configuracion.html"> Configuración</a></l </ul>
+  </div>
+  </div>
+  <div class="main-content">
+    <div class="header">
+      <h1>Bienvenido</h1>
+      <p>Resumen de tu salud glucémica</p>
+    </div>
+
+    <div class="user-card">
+      <div class="user-card__avatar">
+        <i class="fas fa-user-circle"></i>
+      </div>
+      <div class="user-card__info">
+        <div class="user-card__label">Usuario</div>
+        <div id="loggedUserName" class="user-card__name"></div>
       </div>
     </div>
-    <div id="measurementEm" class="Emer">
-      <div class="emer-content">
-        <h3>Nueva Medición</h3>
-        <label>Valor (mg/dL):</label>
-        <input id="inputValue" type="number" min="0">
-        <label>Fecha/hora:</label>
-        <input id="inputTimestamp" type="datetime-local">
-        <div style="text-align:right; margin-top:10px;">
-          <button id="cancelMeasurementBtn">Cancelar</button>
-          <button id="saveMeasurementBtn">Guardar</button>
+
+
+    <div class="dashboard-grid">
+      <div class="card glucose-chart">
+        <div class="card-header">
+          <h3>Tendencias Glucosa</h3>
+          <select id="rangeSelect">
+            <option value="7d">7 días</option>
+            <option value="15d">15 días</option>
+            <option value="30d">30 días</option>
+          </select>
         </div>
+        <canvas id="glucoseChart"></canvas>
+      </div>
+      <div class="card measurements-table">
+        <div class="card-header">
+          <h3>Registros Recientes</h3>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Valor</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="measurementsBody"></tbody>
+        </table>
+      </div>
+      <div class="quick-actions">
+        <div class="card-header">
+          <h3>Acciones Rápidas</h3>
+        </div>
+        <button id="newMeasurementBtn" class="action-btn">
+          <i class="fas fa-plus"></i> Nueva Medición</button>
+        <button id="deleteAllBtn" class="action-btn">
+          <i class="fas fa-trash-alt"></i> Borrar Mediciones
+        </button>
+        <button id="refreshBtn" class="action-btn">
+          <i class="fas fa-sync-alt"></i> Refrescar Datos
+        </button>
+        <button id="registerFoodBtn" class="action-btn">
+          <i class="fas fa-utensils"></i> Registrar Comida
+        </button>
       </div>
     </div>
-      <script src="../scripts/dashboard.js"></script>
-  </body>
-  </html>
-  
+  </div>
+  <div id="measurementModal" class="modal">
+    <div class="modal-content">
+      <h3>Nueva Medición</h3>
+      <label>Valor (mg/dL):</label>
+      <input id="inputValue" type="number" min="0">
+      <br>
+      <label>Fecha/hora:</label>
+      <input id="inputTimestamp" type="datetime-local">
+      <div style="text-align:right; margin-top:10px;">
+        <button id="cancelMeasurementBtn">Cancelar</button>
+        
+        <button id="saveMeasurementBtn">Guardar</button>
+      </div>
+    </div>
+  </div>
+  <script src="../scripts/dashboard.js"></script>
+</body>
+
+</html>

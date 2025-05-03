@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
   }
 
   try {
-    const list = await Measurement.find(match).sort({ timestamp: -1 });
+    const list = await Measurement.find(match).sort({ timestamp: 1 });
     res.json({ ok: true, measurements: list });
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
@@ -81,5 +81,23 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ ok: false, error: err.message });
   }
 });
+
+// Delete all measurements for a user
+//    DELETE /api/measurements?user=ID
+router.delete('/', async (req, res) => {
+  const { user } = req.query;
+  if (!user) {
+    return res
+      .status(400)
+      .json({ ok: false, error: 'Parámetro user obligatorio' });
+  }
+  try {
+    const result = await Measurement.deleteMany({ user });
+    res.json({ ok: true, deletedCount: result.deletedCount });
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
 
 module.exports = router;
