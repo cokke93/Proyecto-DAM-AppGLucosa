@@ -13,6 +13,7 @@ function createWindow() {
   });
 
   win.loadFile('./pages/dashboard.html');
+  win.webContents.openDevTools();
 }
 
 app.whenReady().then(() => {
