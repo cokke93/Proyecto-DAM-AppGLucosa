@@ -1,35 +1,36 @@
 // scripts/dashboard.js
 
+const { dialog } = require('@electron/remote');
 const API_BASE = 'http://localhost:3000/api/measurements';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const token = localStorage.getItem('token') || '';
-  const userId = localStorage.getItem('userId') || '';
+  const token    = localStorage.getItem('token')  || '';
+  const userId   = localStorage.getItem('userId') || '';
   const userName = localStorage.getItem('userName') || 'Usuario';
 
   document.getElementById('loggedUserName').textContent = userName;
 
-  const rangeSelect = document.getElementById('rangeSelect');
-  const newBtn = document.getElementById('newMeasurementBtn');
-  const cancelBtn = document.getElementById('cancelMeasurementBtn');
-  const saveBtn = document.getElementById('saveMeasurementBtn');
-  const deleteAllBtn = document.getElementById('deleteAllBtn');
-  const refreshBtn = document.getElementById('refreshBtn');
+  const rangeSelect     = document.getElementById('rangeSelect');
+  const newBtn          = document.getElementById('newMeasurementBtn');
+  const cancelBtn       = document.getElementById('cancelMeasurementBtn');
+  const saveBtn         = document.getElementById('saveMeasurementBtn');
+  const deleteAllBtn    = document.getElementById('deleteAllBtn');
+  const refreshBtn      = document.getElementById('refreshBtn');
   const registerFoodBtn = document.getElementById('registerFoodBtn');
-  const modal = document.getElementById('measurementModal');
+  const modal           = document.getElementById('measurementModal');
 
   // Listeners
   rangeSelect.addEventListener('change', () => loadMeasurements(rangeSelect.value, token));
-  newBtn.addEventListener('click', showModal);
+  newBtn.addEventListener('click',   showModal);
   cancelBtn.addEventListener('click', hideModal);
   window.addEventListener('click', e => { if (e.target === modal) hideModal(); });
-  saveBtn.addEventListener('click', () => saveMeasurement(userId, token));
+  saveBtn.addEventListener('click',      () => saveMeasurement(userId, token));
   deleteAllBtn.addEventListener('click', () => deleteAllMeasurements(userId, token));
-  refreshBtn.addEventListener('click', () => loadMeasurements(rangeSelect.value, token));
+  refreshBtn.addEventListener('click',   () => loadMeasurements(rangeSelect.value, token));
   registerFoodBtn.addEventListener('click', () => window.location.href = './nutricion.html');
+
   loadMeasurements(rangeSelect.value, token);
 });
-
 
 // Load measurements on page load
 async function loadMeasurements(range, token) {
@@ -42,7 +43,12 @@ async function loadMeasurements(range, token) {
     renderChart(data);
   } catch (err) {
     console.error(err);
-    alert('Error cargando mediciones');
+    dialog.showMessageBox({
+      type:    'error',
+      title:   'Error',
+      message: 'Error cargando mediciones',
+      buttons: ['OK']
+    });
   }
 }
 
@@ -65,9 +71,9 @@ function renderTable(data) {
 
 // Render chart using Chart.js
 function renderChart(data) {
-  const ordered = data.slice()
-  const labels = ordered.map(m => new Date(m.timestamp).toLocaleDateString());
-  const vals = ordered.map(m => m.value);
+  const ordered = data.slice();
+  const labels  = ordered.map(m => new Date(m.timestamp).toLocaleDateString());
+  const vals    = ordered.map(m => m.value);
 
   if (window.myChart) window.myChart.destroy();
   window.myChart = new Chart(
@@ -78,19 +84,18 @@ function renderChart(data) {
 
 // Modal functions
 function showModal() {
-  document.getElementById('inputValue').value = '';
-  document.getElementById('inputTimestamp').value = new Date().toISOString().slice(0, 16);
+  document.getElementById('inputValue').value      = '';
+  document.getElementById('inputTimestamp').value  = new Date().toISOString().slice(0,16);
   document.getElementById('measurementModal').style.display = 'block';
 }
 
-// Hide modal
 function hideModal() {
   document.getElementById('measurementModal').style.display = 'none';
 }
 
 // Save measurement
 async function saveMeasurement(userId, token) {
-  const v = parseFloat(document.getElementById('inputValue').value);
+  const v  = parseFloat(document.getElementById('inputValue').value);
   const ts = new Date(document.getElementById('inputTimestamp').value);
   try {
     await axios.post(
@@ -100,39 +105,96 @@ async function saveMeasurement(userId, token) {
     );
     hideModal();
     loadMeasurements(document.getElementById('rangeSelect').value, token);
-    alert('Medición guardada');
+    dialog.showMessageBox({
+      type:    'info',
+      title:   'Guardado',
+      message: 'Medición guardada',
+      buttons: ['OK']
+    });
   } catch (err) {
     console.error(err);
-    alert('Error guardando medición');
+    dialog.showMessageBox({
+      type:    'error',
+      title:   'Error',
+      message: 'Error guardando medición',
+      buttons: ['OK']
+    });
   }
 }
 
-// Delete measurement by ID
+// Delete single measurement
 async function deleteMeasurement(id) {
-  if (!confirm('¿Seguro que quieres borrar esta medición?')) return;
+  const { response } = await dialog.showMessageBox({
+    type:      'question',
+    buttons:   ['Cancelar','Borrar'],
+    defaultId: 1,
+    cancelId:  0,
+    title:     'Confirmar',
+    message:   '¿Seguro que quieres borrar esta medición?'
+  });
+  if (response !== 1) return;
+
   const token = localStorage.getItem('token');
   try {
     await axios.delete(`${API_BASE}/${id}`, { headers: { Authorization: `Bearer ${token}` } });
     loadMeasurements(document.getElementById('rangeSelect').value, token);
-    alert('Medición borrada');
+    dialog.showMessageBox({
+      type:    'info',
+      title:   'Borrado',
+      message: 'Medición borrada',
+      buttons: ['OK']
+    });
   } catch (err) {
     console.error(err);
-    alert('Error borrando medición');
+    dialog.showMessageBox({
+      type:    'error',
+      title:   'Error',
+      message: 'Error borrando medición',
+      buttons: ['OK']
+    });
   }
 }
 
 // Delete all measurements
 async function deleteAllMeasurements(userId, token) {
-  if (!userId) return alert('No hay usuario logueado');
-  if (!confirm('¿Seguro que quieres borrar TODAS tus mediciones?')) return;
+  if (!userId) {
+    await dialog.showMessageBox({
+      type:    'warning',
+      title:   'Atención',
+      message: 'No hay usuario logueado',
+      buttons: ['OK']
+    });
+    return;
+  }
+
+  const { response } = await dialog.showMessageBox({
+    type:      'question',
+    buttons:   ['Cancelar','Borrar todas'],
+    defaultId: 1,
+    cancelId:  0,
+    title:     'Confirmar',
+    message:   '¿Seguro que quieres borrar TODAS tus mediciones?'
+  });
+  if (response !== 1) return;
+
   try {
     const res = await axios.delete(`${API_BASE}?user=${userId}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
-    alert(`Se han borrado ${res.data.deletedCount} mediciones`);
+    await dialog.showMessageBox({
+      type:    'info',
+      title:   'Borrado',
+      message: `Se han borrado ${res.data.deletedCount} mediciones`,
+      buttons: ['OK']
+    });
     loadMeasurements(document.getElementById('rangeSelect').value, token);
   } catch (err) {
     console.error(err);
-    alert('Error al borrar todas las mediciones');
+    dialog.showMessageBox({
+      type:    'error',
+      title:   'Error',
+      message: 'Error al borrar todas las mediciones',
+      buttons: ['OK']
+    });
   }
 }
