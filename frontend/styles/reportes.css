@@ -1,92 +1,73 @@
-.report-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-}
+    /* Reportes.css */
+    .report-date-picker {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
 
-.report-card {
-    background: white;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease;
-    cursor: pointer;
-}
+    .date-input {
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        width: 200px;
+    }
 
-.report-card:hover {
-    transform: translateY(-5px);
-}
+    .btn {
+        background: #1e3c72;
+        color: #fff;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+    }
 
-.report-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
-}
+    .btn:hover {
+        opacity: 0.9;
+    }
 
-.report-icon {
-    width: 50px;
-    height: 50px;
-    background: #1e3c72;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.4rem;
-}
+    .report-preview {
+        margin-top: 2rem;
+    }
 
-.report-date-picker {
-    margin: 20px 0;
-    display: flex;
-    gap: 15px;
-}
+    .pdf-preview {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: #f9faff;
+        border: 1px dashed #ccc;
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+    }
 
-.date-input {
-    padding: 10px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    width: 200px;
-}
+    .preview-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
 
-.btn {
-    padding: 12px 25px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-    color: white;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-}
+    .preview-header h2 {
+        font-size: 1.75rem;
+        margin-bottom: 0.25rem;
+    }
 
-.btn:hover {
-    opacity: 0.9;
-}
+    .preview-header p {
+        color: #555;
+        font-size: 0.95rem;
+    }
 
-.report-preview {
-    margin-top: 30px;
-    background: white;
-    border-radius: 15px;
-    padding: 25px;
-    min-height: 500px;
-}
+    .pdf-preview table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1.5rem;
+    }
 
-.pdf-preview {
-    border: 2px dashed #e0e0e0;
-    border-radius: 10px;
-    padding: 20px;
-    background: #f8f9fd;
-}
+    .pdf-preview th,
+    .pdf-preview td {
+        border: 1px solid #bbb;
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
 
-.preview-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.preview-logo {
-    width: 80px;
-    margin: 0 auto 15px;
-}
+    .pdf-preview th {
+        background: #eceff5;
+        font-weight: 600;
+    }

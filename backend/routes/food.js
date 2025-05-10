@@ -1,6 +1,6 @@
-const express   = require('express');
-const FoodItem  = require('../models/FoodItem');
-const router    = express.Router();
+const express = require('express');
+const FoodItem = require('../models/FoodItem');
+const router = express.Router();
 
 //Find food items
 //    GET /api/food?search=manzana&giCategory=low&category=Fruta

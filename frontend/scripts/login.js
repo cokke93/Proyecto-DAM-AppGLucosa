@@ -3,10 +3,10 @@
 const { dialog } = require('@electron/remote');
 const apiLogin = 'http://localhost:3000/api/auth/login';
 
-document.getElementById('loginForm').addEventListener('submit', async function(e) {
+document.getElementById('loginForm').addEventListener('submit', async function (e) {
   e.preventDefault();
 
-  const email    = this.querySelector('input[type="email"]').value;
+  const email = this.querySelector('input[type="email"]').value;
   const password = this.querySelector('input[type="password"]').value;
 
   try {
@@ -18,8 +18,8 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
       window.location.href = 'dashboard.html';
     } else {
       await dialog.showMessageBox({
-        type:    'error',
-        title:   'Error de autenticación',
+        type: 'error',
+        title: 'Error de autenticación',
         message: res.data.error || 'Credenciales inválidas',
         buttons: ['OK']
       });
@@ -27,8 +27,8 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   } catch (err) {
     console.error(err);
     await dialog.showMessageBox({
-      type:    'error',
-      title:   'Error de conexión',
+      type: 'error',
+      title: 'Error de conexión',
       message: 'No se pudo conectar con el servidor',
       buttons: ['OK']
     });

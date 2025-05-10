@@ -24,11 +24,11 @@
 }
 
 .glucose-chart {
-    position: relative;  
-    overflow: hidden;  
+    position: relative;
+    overflow: hidden;
     grid-column: span 2;
     height: 400px;
-  }
+}
 
 .measurements-table {
     overflow-x: hidden;

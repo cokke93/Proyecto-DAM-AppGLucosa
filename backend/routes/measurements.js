@@ -1,6 +1,6 @@
-const express     = require('express');
+const express = require('express');
 const Measurement = require('../models/Measurement');
-const router      = express.Router();
+const router = express.Router();
 
 //New measurement
 //    POST /api/measurements
@@ -18,20 +18,28 @@ router.post('/', async (req, res) => {
   }
 });
 
-//Read measurements
+// Read measurements
 //    GET /api/measurements?user=ID&type=glucosa&range=7d
+//    GET /api/measurements?user=ID&type=glucosa&start=YYYY-MM-DD&end=YYYY-MM-DD
 router.get('/', async (req, res) => {
-  const { user, type, range = '7d' } = req.query;
+  const { user, type, range = '7d', start, end } = req.query;
   const match = {};
-  if (user)  match.user  = user;
-  if (type)  match.type  = type;
+  if (user) match.user = user;
+  if (type) match.type = type;
 
-  // Filter by date range
-  if (/^\d+d$/.test(range)) {
+  // Si vienen start+end, filtramos entre esas fechas
+  if (start && end) {
+    const s = new Date(start);
+    const e = new Date(end);
+    e.setHours(23, 59, 59, 999);
+    match.timestamp = { $gte: s, $lte: e };
+  }
+  // Si no, aplicamos el range (7d, 30d, etc)
+  else if (/^\d+d$/.test(range)) {
     const days = parseInt(range.slice(0, -1), 10);
-    const dateFrom = new Date();
-    dateFrom.setDate(dateFrom.getDate() - days);
-    match.timestamp = { $gte: dateFrom };
+    const from = new Date();
+    from.setDate(from.getDate() - days);
+    match.timestamp = { $gte: from };
   }
 
   try {

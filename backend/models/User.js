@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt   = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -24,10 +24,10 @@ const userSchema = new mongoose.Schema({
 });
 
 //If password is modified hash it
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   try {
-    const salt    = await bcrypt.genSalt(10);
+    const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
     next();
   } catch (err) {
@@ -36,12 +36,12 @@ userSchema.pre('save', async function(next) {
 });
 
 //Compare login
-userSchema.methods.comparePassword = function(candidate) {
+userSchema.methods.comparePassword = function (candidate) {
   return bcrypt.compare(candidate, this.password);
 };
 
 //Remove password from JSON response
-userSchema.methods.toJSON = function() {
+userSchema.methods.toJSON = function () {
   const obj = this.toObject();
   delete obj.password;
   return obj;

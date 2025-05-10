@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../styles/general.css">
     <link rel="stylesheet" href="../styles/reportes.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../scripts/reportes.js"></script>
 </head>
 
 <body>
@@ -24,7 +26,7 @@
             <li class="nav-item"><i class="fas fa-chart-line"></i><a href="./estadisticas.html"> Estadísticas</a></li>
             <li class="nav-item"><i class="fas fa-utensils"></i><a href="./nutricion.html"> Nutrición</a></li>
             <li class="nav-item active"><i class="fas fa-file-pdf"></i><a href="./reportes.html"> Reportes</a></li>
-            <li class="nav-item"><i class="fas fa-cog"></i><a href="./configuracion.html"> Configuración</a></l </ul>
+        </ul>
     </div>
 
     <div class="main-content">
@@ -39,47 +41,6 @@
             <input type="date" class="date-input" id="startDate">
             <input type="date" class="date-input" id="endDate">
             <button class="btn"><i class="fas fa-filter"></i> Filtrar</button>
-        </div>
-
-        <div class="report-grid">
-            <div class="report-card">
-                <div class="report-header">
-                    <div class="report-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Reporte Periódico</h3>
-                </div>
-                <p>Genera un informe detallado con tus mediciones en el periodo seleccionado</p>
-                <button class="btn" style="margin-top: 15px;">
-                    <i class="fas fa-file-alt"></i> Generar
-                </button>
-            </div>
-
-            <div class="report-card">
-                <div class="report-header">
-                    <div class="report-icon">
-                        <i class="fas fa-file-medical"></i>
-                    </div>
-                    <h3>Reporte Completo</h3>
-                </div>
-                <p>Informe completo con todas tus métricas: glucosa, nutrición y actividad</p>
-                <button class="btn" style="margin-top: 15px;">
-                    <i class="fas fa-file-medical"></i> Generar
-                </button>
-            </div>
-
-            <div class="report-card">
-                <div class="report-header">
-                    <div class="report-icon">
-                        <i class="fas fa-balance-scale"></i>
-                    </div>
-                    <h3>Comparativa</h3>
-                </div>
-                <p>Compara periodos diferentes para analizar tu evolución</p>
-                <button class="btn" style="margin-top: 15px;">
-                    <i class="fas fa-chart-bar"></i> Generar
-                </button>
-            </div>
         </div>
 
         <div class="report-preview">
@@ -103,7 +64,10 @@
                 </table>
 
                 <div style="margin-top: 30px;">
-                    <button class="btn"><i class="fas fa-download"></i> Exportar a PDF</button>
+                    <button id="exportPdfBtn" class="btn">
+                        <i class="fas fa-download"></i> Descargar PDF
+                    </button>
+
                 </div>
             </div>
         </div>

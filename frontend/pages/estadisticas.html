@@ -1,150 +1,106 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AppGLucosa - Estadísticas</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="../styles/estadisticas.css">
-    <link rel="stylesheet" href="../styles/general.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AppGLucosa - Estadísticas</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../styles/estadisticas.css">
+  <link rel="stylesheet" href="../styles/general.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../scripts/estadisticas.js" defer></script>
 </head>
-
 <body>
-    <div class="sidebar">
-        <div class="logo-section">
-            <div class="logo">
-                <i class="fas fa-heartbeat"></i>
-            </div>
-            <h2>AppGLucosa</h2>
-        </div>
+  <div class="sidebar">
+    <div class="logo-section">
+      <div class="logo"><i class="fas fa-heartbeat"></i></div>
+      <h2>AppGLucosa</h2>
+    </div>
+    <ul class="nav-menu">
+      <li class="nav-item"><i class="fas fa-home"></i><a href="./dashboard.html">Dashboard</a></li>
+      <li class="nav-item active"><i class="fas fa-chart-line"></i><a href="./estadisticas.html">Estadísticas</a></li>
+      <li class="nav-item"><i class="fas fa-utensils"></i><a href="./nutricion.html">Nutrición</a></li>
+      <li class="nav-item"><i class="fas fa-file-pdf"></i><a href="./reportes.html">Reportes</a></li>
+      
+    </ul>
+  </div>
 
-        <ul class="nav-menu">
-            <li class="nav-item "><i class="fas fa-home"></i><a href="./dashboard.html">Dashboard</a></li>
-            <li class="nav-item active"><i class="fas fa-chart-line"></i><a href="./estadisticas.html"> Estadísticas</a>
-            </li>
-            <li class="nav-item"><i class="fas fa-utensils"></i><a href="./nutricion.html"> Nutrición</a></li>
-            <li class="nav-item"><i class="fas fa-file-pdf"></i><a href="./reportes.html"> Reportes</a></li>
-            <li class="nav-item"><i class="fas fa-cog"></i><a href="./configuracion.html"> Configuración</a></l </ul>
+  <div class="main-content">
+    <div class="header">
+      <div class="header-title">
+        <h1>Estadísticas Avanzadas</h1>
+        <p>Análisis detallado de tus datos</p>
+      </div>
     </div>
 
-    <div class="main-content">
-        <div class="header">
-            <div class="header-title">
-                <h1>Estadísticas Avanzadas</h1>
-                <p>Análisis detallado de tus datos</p>
-            </div>
-        </div>
-
-        <div class="time-filter">
-            <div class="filter-group">
-                <select id="timeRange">
-                    <option>Últimos 7 días</option>
-                    <option>Últimos 30 días</option>
-                    <option>Personalizado</option>
-                </select>
-                <select id="dataType">
-                    <option>Glucosa</option>
-                    <option>Actividad Física</option>
-                    <option>Medicación</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="dashboard-grid">
-            <div class="card glucose-chart">
-                <div class="card-header">
-                    <h3 class="card-title">Tendencias Glucémicas</h3>
-                    <i class="card-icon fas fa-chart-line"></i>
-                </div>
-                <canvas id="mainChart"></canvas>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Resumen Estadístico</h3>
-                    <i class="card-icon fas fa-calculator"></i>
-                </div>
-                <div class="stats-summary">
-                    <div class="stat-box">
-                        <div class="stat-value">98 mg/dL</div>
-                        <div>Media Diaria</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-value">5.2%</div>
-                        <div>HbA1c Estimado</div>
-                    </div>
-                    <br>
-                    <div class="stat-box">
-                        <div class="stat-value">12%</div>
-                        <div>Variabilidad</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Distribución de Valores</h3>
-                    <i class="card-icon fas fa-chart-pie"></i>
-                </div>
-                <canvas id="distributionChart"></canvas>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Últimos Registros</h3>
-                    <i class="card-icon fas fa-list"></i>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Valor</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>2023-11-20</td>
-                            <td>96 mg/dL</td>
-                            <td><span style="color: #4CAF50;">Normal</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="time-filter">
+      <div class="filter-group">
+        <select id="timeRange">
+          <option>Últimos 7 días</option>
+          <option>Últimos 30 días</option>
+        </select>
+      </div>
     </div>
 
-    <script>
-        const mainCtx = document.getElementById('mainChart').getContext('2d');
-        new Chart(mainCtx, {
-            type: 'line',
-            data: {
-                labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
-                datasets: [{
-                    label: 'Glucosa',
-                    data: [95, 102, 98, 110, 92, 105, 99],
-                    borderColor: '#1e3c72',
-                    tension: 0.4
-                }]
-            }
-        });
+    <div class="dashboard-grid">
 
-        const distributionCtx = document.getElementById('distributionChart').getContext('2d');
-        new Chart(distributionCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Normal', 'Hipo', 'Hiper'],
-                datasets: [{
-                    label: 'Frecuencia',
-                    data: [85, 5, 10],
-                    backgroundColor: ['#4CAF50', '#2196F3', '#FF5252']
-                }]
-            }
-        });
-    </script>
+      <div class="card glucose-chart">
+        <div class="card-header">
+          <h3 class="card-title">Tendencias Glucémicas</h3>
+          <i class="card-icon fas fa-chart-line"></i>
+        </div>
+        <canvas id="mainChart"></canvas>
+        <p style="font-weight: bolder;">Tendencia glucemica media diaria</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Resumen Estadístico</h3>
+          <i class="card-icon fas fa-calculator"></i>
+        </div>
+        <div class="stats-summary">
+          <div class="stat-box">
+            <div id="meanValue" class="stat-value">0 mg/dL</div>
+            <div>Media Diaria</div>
+          </div>
+          <div class="stat-box">
+            <div id="hba1cValue" class="stat-value">0 %</div>
+            <div>HbA1c Estimado</div>
+          </div>
+          <div class="stat-box">
+            <div id="cvValue" class="stat-value">0 %</div>
+            <div>Variabilidad</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Distribución de Valores</h3>
+          <i class="card-icon fas fa-chart-pie"></i>
+        </div>
+        <canvas id="distributionChart"></canvas>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Últimos Registros</h3>
+          <i class="card-icon fas fa-list"></i>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Valor</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="lastRecordsBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </body>
-
 </html>

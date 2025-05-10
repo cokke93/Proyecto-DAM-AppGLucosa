@@ -21,10 +21,10 @@ const foodSchema = new mongoose.Schema({
       'Panadería',
       'Lácteo',
       'Vegetal',
-      'Legumbre',     
-      'Tubérculo',    
-      'Bebida',       
-      'Endulzante'    
+      'Legumbre',
+      'Tubérculo',
+      'Bebida',
+      'Endulzante'
     ]
   },
   portion_g: {
@@ -39,7 +39,7 @@ const foodSchema = new mongoose.Schema({
 });
 
 //Clasification by GI
-foodSchema.virtual('giCategory').get(function() {
+foodSchema.virtual('giCategory').get(function () {
   if (this.giIndex <= 55) return 'low';
   if (this.giIndex <= 69) return 'medium';
   return 'high';
