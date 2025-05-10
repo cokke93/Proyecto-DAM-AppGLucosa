@@ -1,24 +1,36 @@
-var apiLogin = 'http://localhost:3000/api/auth/login';
+// scripts/login.js
 
-document.getElementById('loginForm').addEventListener('submit', function(e) {
+const { dialog } = require('@electron/remote');
+const apiLogin = 'http://localhost:3000/api/auth/login';
+
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
   e.preventDefault();
 
-  var email    = this.querySelector('input[type="email"]').value;
-  var password = this.querySelector('input[type="password"]').value;
+  const email    = this.querySelector('input[type="email"]').value;
+  const password = this.querySelector('input[type="password"]').value;
 
-  axios.post(apiLogin, { email: email, password: password })
-    .then(function(res) {
-      if (res.data.ok) {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('userId', res.data.user._id);
-        localStorage.setItem('userName', res.data.user.name);
-        window.location.href = 'dashboard.html';
-      } else {
-        alert('Error: ' + (res.data.error||'Credenciales inválidas'));
-      }
-    })
-    .catch(function(err) {
-      console.log(err);
-      alert('Error al conectar con el servidor');
+  try {
+    const res = await axios.post(apiLogin, { email, password });
+    if (res.data.ok) {
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('userId', res.data.user._id);
+      localStorage.setItem('userName', res.data.user.name);
+      window.location.href = 'dashboard.html';
+    } else {
+      await dialog.showMessageBox({
+        type:    'error',
+        title:   'Error de autenticación',
+        message: res.data.error || 'Credenciales inválidas',
+        buttons: ['OK']
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    await dialog.showMessageBox({
+      type:    'error',
+      title:   'Error de conexión',
+      message: 'No se pudo conectar con el servidor',
+      buttons: ['OK']
     });
+  }
 });
