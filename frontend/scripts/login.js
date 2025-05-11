@@ -1,5 +1,6 @@
 // scripts/login.js
 
+const axios = require('axios')
 const { dialog } = require('@electron/remote');
 const apiLogin = 'http://localhost:3000/api/auth/login';
 

@@ -1,5 +1,5 @@
 // scripts/dashboard.js
-
+const axios = require('axios')
 const { dialog } = require('@electron/remote');
 const API_BASE = 'http://localhost:3000/api/measurements';
 

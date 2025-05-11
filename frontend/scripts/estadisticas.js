@@ -1,4 +1,5 @@
 // scripts/estadisticas.js
+const axios = require('axios')
 const API_BASE = 'http://localhost:3000/api/measurements';
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -1,5 +1,5 @@
 // scripts/register.js
-
+const axios = require('axios')
 const { dialog } = require('@electron/remote');
 const apiRegister = 'http://localhost:3000/api/auth/register';
 

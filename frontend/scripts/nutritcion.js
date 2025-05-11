@@ -1,5 +1,5 @@
 // scripts/food.js
-
+const axios = require('axios')
 const { dialog } = require('@electron/remote');
 const apiUrl = 'http://localhost:3000/api/food';
 let editId = null;
