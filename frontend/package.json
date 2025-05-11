@@ -24,9 +24,11 @@
 
     "@electron/remote": "^2.1.2",
 
+    "@fortawesome/fontawesome-free": "^6.7.2",
+
     "axios": "^1.9.0",
 
-    "chart.js": "^4.4.8",
+    "chart.js": "^4.4.9",
 
     "electron": "^35.1.5"
 
