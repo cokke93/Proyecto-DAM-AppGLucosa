@@ -127,3 +127,10 @@ function getStateLabel(v) {
   if (v > 180) return '<span style="color:red">Híper</span>';
   return '<span style="color:green">Normal</span>';
 }
+
+  document.getElementById('logoutBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    window.location.href = 'login.html';})

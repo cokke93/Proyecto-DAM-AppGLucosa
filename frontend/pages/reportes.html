@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="../styles/general.css">
     <link rel="stylesheet" href="../styles/reportes.css">
-    <script src="../scripts/reportes.js"></script>
 </head>
 
 <body>
@@ -19,13 +18,28 @@
             </div>
             <h2>AppGLucosa</h2>
         </div>
-
-        <ul class="nav-menu">
-            <li class="nav-item "><i class="fas fa-home"></i><a href="./dashboard.html">Dashboard</a></li>
-            <li class="nav-item"><i class="fas fa-chart-line"></i><a href="./estadisticas.html"> Estadísticas</a></li>
-            <li class="nav-item"><i class="fas fa-utensils"></i><a href="./nutricion.html"> Nutrición</a></li>
-            <li class="nav-item active"><i class="fas fa-file-pdf"></i><a href="./reportes.html"> Reportes</a></li>
-        </ul>
+<ul class="nav-menu">
+  <li class="nav-item ">
+    <i class="fas fa-home"></i>
+    <a href="./dashboard.html">Dashboard</a>
+  </li>
+  <li class="nav-item">
+    <i class="fas fa-chart-line"></i>
+    <a href="./estadisticas.html">Estadísticas</a>
+  </li>
+  <li class="nav-item">
+    <i class="fas fa-utensils"></i>
+    <a href="./nutricion.html">Nutrición</a>
+  </li>
+  <li class="nav-item active">
+    <i class="fas fa-file-pdf"></i>
+    <a href="./reportes.html">Reportes</a>
+  </li>
+  <li class="nav-item">
+    <i class="fas fa-sign-out-alt"></i>
+    <a href="#" id="logoutBtn">Salir</a>
+  </li>
+</ul>
     </div>
 
     <div class="main-content">
@@ -71,6 +85,7 @@
             </div>
         </div>
     </div>
+    <script src="../scripts/reportes.js"></script>
 </body>
 
 </html>

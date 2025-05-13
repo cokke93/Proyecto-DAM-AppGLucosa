@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="../styles/estadisticas.css">
   <link rel="stylesheet" href="../styles/general.css">
-  <script src="../scripts/estadisticas.js" defer></script>
 </head>
 <body>
   <div class="sidebar">
@@ -15,13 +14,29 @@
       <div class="logo"><i class="fas fa-heartbeat"></i></div>
       <h2>AppGLucosa</h2>
     </div>
-    <ul class="nav-menu">
-      <li class="nav-item"><i class="fas fa-home"></i><a href="./dashboard.html">Dashboard</a></li>
-      <li class="nav-item active"><i class="fas fa-chart-line"></i><a href="./estadisticas.html">Estadísticas</a></li>
-      <li class="nav-item"><i class="fas fa-utensils"></i><a href="./nutricion.html">Nutrición</a></li>
-      <li class="nav-item"><i class="fas fa-file-pdf"></i><a href="./reportes.html">Reportes</a></li>
-      
-    </ul>
+<ul class="nav-menu">
+  <li class="nav-item">
+    <i class="fas fa-home"></i>
+    <a href="./dashboard.html">Dashboard</a>
+  </li>
+  <li class="nav-item active">
+    <i class="fas fa-chart-line"></i>
+    <a href="./estadisticas.html">Estadísticas</a>
+  </li>
+  <li class="nav-item">
+    <i class="fas fa-utensils"></i>
+    <a href="./nutricion.html">Nutrición</a>
+  </li>
+  <li class="nav-item">
+    <i class="fas fa-file-pdf"></i>
+    <a href="./reportes.html">Reportes</a>
+  </li>
+  <li class="nav-item">
+    <i class="fas fa-sign-out-alt"></i>
+    <a href="#" id="logoutBtn">Salir</a>
+  </li>
+</ul>
+
   </div>
 
   <div class="main-content">
@@ -100,5 +115,6 @@
       </div>
     </div>
   </div>
+    <script src="../scripts/estadisticas.js" defer></script>
 </body>
 </html>

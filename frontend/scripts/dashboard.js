@@ -195,3 +195,10 @@ async function deleteAllMeasurements(userId, token) {
     dialog.showMessageBox({ type:'error', title:'Error', message:'Error al borrar mediciones', buttons:['OK'] })
   }
 }
+
+  document.getElementById('logoutBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    window.location.href = 'login.html';})
