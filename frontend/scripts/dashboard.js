@@ -86,9 +86,15 @@ function renderTable(data) {
 }
 
 function renderChart(data) {
-  const ordered = data.slice();
-  const labels  = ordered.map(m => new Date(m.timestamp).toLocaleDateString());
-  const vals    = ordered.map(m => m.value);
+  const ordered = data.slice().sort((a,b)=> new Date(a.timestamp) - new Date(b.timestamp));
+  const labels  = ordered.map(m => {
+    const d = new Date(m.timestamp);
+    return [
+      d.toLocaleDateString(),
+      d.toLocaleTimeString()
+    ];
+  });
+  const vals = ordered.map(m => m.value);
 
   if (window.myChart) window.myChart.destroy();
 
@@ -103,48 +109,47 @@ function renderChart(data) {
         borderColor: '#1e3c72',
         tension: 0.4,
         fill: false,
-        pointBackgroundColor: '#ffffff',
+        pointBackgroundColor: '#fff',
         pointBorderColor: '#1e3c72',
         pointRadius: 4
       }]
     },
     options: {
+      responsive: true,
+      maintainAspectRatio: false,
       scales: {
         x: {
-          title: {
-            display: true,
-            text: 'Fecha'
-          },
+          title: { display: true, text: 'Fecha y hora' },
           ticks: {
-            maxRotation: 45,
-            minRotation: 45,
-            autoSkip: true
+            autoSkip: true,
+            maxRotation: 0,
+            align: 'center'
           }
         },
         y: {
-          title: {
-            display: true,
-            text: 'Valor (mg/dL)'
-          },
+          title: { display: true, text: 'Valor (mg/dL)' },
           beginAtZero: true
         }
       },
       plugins: {
-        legend: {
-          display: true,
-          position: 'top'
-        },
+        legend: { display: true, position: 'top' },
         tooltip: {
           callbacks: {
-            label: context => `${context.parsed.y} mg/dL`
+            title: (tooltipItems) => {
+              const chart = tooltipItems[0].chart;
+              const idx   = tooltipItems[0].dataIndex;
+              const lbl   = chart.data.labels[idx];
+              return Array.isArray(lbl) ? lbl.join(' ') : lbl;
+            },
+            label: (tooltipItem) => ` ${tooltipItem.parsed.y} mg/dL`
           }
         }
-      },
-      responsive: true,
-      maintainAspectRatio: false
+      }
     }
   });
 }
+
+
 
 
 function showModal() {
