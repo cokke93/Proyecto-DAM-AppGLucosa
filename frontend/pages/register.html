@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>AppGLucosa – Registro</title>
-    <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="../styles/login.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>AppGLucosa – Registro</title>
+  <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../styles/login.css">
 </head>
-
 <body>
-    <div class="login-container">
-        <div class="logo-section">
-            <div class="logo">
-                <i class="fas fa-heartbeat"></i>
-            </div>
-            <h1>AppGLucosa</h1>
-            <p class="tagline">Regístrate para empezar</p>
-        </div>
-        <form id="registerForm">
-            <div class="input-group">
-                <input type="text" id="name" placeholder="Nombre completo" required>
-            </div>
-            <div class="input-group">
-                <input type="email" id="email" placeholder="Correo electrónico" required>
-            </div>
-            <div class="input-group">
-                <input type="password" id="password" placeholder="Contraseña" required>
-            </div>
-            <button type="submit" class="login-btn">Registrarse</button>
-        </form>
-        <div class="signup-section">
-            ¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a>
-        </div>
+  <div class="login-container">
+    <div class="logo-section">
+      <div class="logo">
+        <i class="fas fa-heartbeat"></i>
+      </div>
+      <h1>AppGLucosa</h1>
+      <p class="tagline">Regístrate para empezar</p>
     </div>
-    <script src="../scripts/register.js"></script>
+    <form id="registerForm">
+      <div class="input-group">
+        <input type="text" id="name" placeholder="Nombre completo" required>
+      </div>
+      <div class="input-group">
+        <input type="email" id="email" placeholder="Correo electrónico" required>
+      </div>
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Contraseña" required>
+      </div>
+      <div class="input-group">
+        <input type="password" id="confirmPassword" placeholder="Confirmar contraseña" required>
+      </div>
+      <button type="submit" class="login-btn">Registrarse</button>
+    </form>
+    <div class="signup-section">
+      ¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a>
+    </div>
+  </div>
+  <script src="../scripts/register.js"></script>
 </body>
-
 </html>
