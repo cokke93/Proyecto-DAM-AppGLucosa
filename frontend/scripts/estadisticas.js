@@ -149,19 +149,20 @@ function renderSummary(data) {
 function renderLastRecords(data) {
   const tbody = document.getElementById('lastRecordsBody');
   tbody.innerHTML = '';
-  //Filter by last 5 records
-  data.slice(0, 5).forEach(m => {
-    const d = new Date(m.timestamp);
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${d.toLocaleDateString()}</td>
-      <td>${m.value}</td>
-      <td>${getStateLabel(m.value)}</td>
-    `;
-    tbody.appendChild(tr);
-  });
+  data
+    .slice(-5)           
+    .reverse()           
+    .forEach(m => {
+      const d = new Date(m.timestamp);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${d.toLocaleDateString()}</td>
+        <td>${m.value}</td>
+        <td>${getStateLabel(m.value)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
 }
-
 function getStateLabel(v) {
   if (v < 70) return '<span style="color:blue">Hipo</span>';
   if (v > 180) return '<span style="color:red">Híper</span>';

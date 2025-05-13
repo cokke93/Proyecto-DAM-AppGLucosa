@@ -86,32 +86,66 @@ function renderTable(data) {
 }
 
 function renderChart(data) {
-  const ordered = data.slice()
-  const labels  = ordered.map(m => new Date(m.timestamp).toLocaleDateString())
-  const vals    = ordered.map(m => m.value)
+  const ordered = data.slice();
+  const labels  = ordered.map(m => new Date(m.timestamp).toLocaleDateString());
+  const vals    = ordered.map(m => m.value);
 
-  if (window.myChart) window.myChart.destroy()
-  window.myChart = new Chart(
-    document.getElementById('glucoseChart').getContext('2d'),
-    {
-      type: 'line',
-      data: {
-        labels,
-        datasets: [{
-          label: 'Glucosa',
-          data: vals,
-          borderColor: '#1e3c72',
-          fill: false,
-          tension: 0.4
-        }]
+  if (window.myChart) window.myChart.destroy();
+
+  const ctx = document.getElementById('glucoseChart').getContext('2d');
+  window.myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Glucosa (mg/dL)',
+        data: vals,
+        borderColor: '#1e3c72',
+        tension: 0.4,
+        fill: false,
+        pointBackgroundColor: '#ffffff',
+        pointBorderColor: '#1e3c72',
+        pointRadius: 4
+      }]
+    },
+    options: {
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Fecha'
+          },
+          ticks: {
+            maxRotation: 45,
+            minRotation: 45,
+            autoSkip: true
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'Valor (mg/dL)'
+          },
+          beginAtZero: true
+        }
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false
-      }
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        tooltip: {
+          callbacks: {
+            label: context => `${context.parsed.y} mg/dL`
+          }
+        }
+      },
+      responsive: true,
+      maintainAspectRatio: false
     }
-  )
+  });
 }
+
 
 function showModal() {
   document.getElementById('inputValue').value = ''
